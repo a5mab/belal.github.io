@@ -12,5 +12,3 @@ Projektet er hosted via GitHub Pages og Azure Static Web Apps for at gøre det t
 - JavaScript
   
 
-
-Belal
