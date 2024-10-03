@@ -1,4 +1,4 @@
-# Skoleprojekt Hjemmeside
+## Skoleprojekt Hjemmeside
 
 Dette er en simpel hjemmeside, som jeg har bygget i forbindelse med et skoleprojekt.
 
@@ -12,4 +12,4 @@ Projektet er hosted via GitHub Pages og Azure Static Web Apps for at gøre det t
 - JavaScript
   
 
-- Belal
+Belal
