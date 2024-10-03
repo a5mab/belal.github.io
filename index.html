@@ -29,13 +29,87 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
+        .welcome-message, .location-message {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        #location-warning {
+            color: red;
+        }
     </style>
+    <script>
+        function showWelcomeMessage() {
+            const container = document.getElementById('welcome-message');
+            const date = new Date();
+            const timeString = date.toLocaleTimeString();
+            const dateString = date.toLocaleDateString();
+            container.textContent = `Velkommen! I dag er det ${dateString} og klokken er ${timeString}.`;
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById('location-message').textContent = "Geolocation er ikke understøttet af denne browser.";
+            }
+        }
+
+        function showPosition(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            // Brug en API til at konvertere latitude/longitude til en by. 
+            // Eksempel: OpenWeatherMap eller Google Geocoding API.
+            // Her er et eksempel ved brug af OpenWeatherMap:
+
+            const helloHello = 'dddec3aa6737a38e31169a43a98fd372d'; //
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${helloHello}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const city = data.name;
+                    document.getElementById('location-message').textContent = `Din nuværende by: ${city}`;
+                })
+                .catch(error => {
+                    document.getElementById('location-message').textContent = "Kunne ikke finde din placering.";
+                });
+        }
+
+        function showError(error) {
+            let message;
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    message = "Du nægtede adgang til placering.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    message = "Placering utilgængelig.";
+                    break;
+                case error.TIMEOUT:
+                    message = "Forespørgsel om placering tog for lang tid.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    message = "En ukendt fejl opstod.";
+                    break;
+            }
+            document.getElementById('location-message').textContent = message;
+        }
+
+        window.onload = function() {
+            showWelcomeMessage();
+            getLocation(); // Få brugerens placering
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>Velkommen til min hjemmeside</h1>
         <p>Lavet af Belal.</p>
         <p>Dette er en simpel webside lavet som en del af projektet.</p>
+        <p id="welcome-message" class="welcome-message"></p> <!-- JavaScript-velkomstbesked -->
+        <p id="location-message" class="location-message"></p> <!-- By baseret på brugerens placering -->
+        <p id="location-warning"></p> <!-- Advarselsmeddelelse hvis noget går galt -->
     </div>
 </body>
 </html>
